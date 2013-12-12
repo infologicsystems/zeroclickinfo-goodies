@@ -1,5 +1,7 @@
 package DDG::Goodie::Crc;
 
+# note: testing has not been completed on this package.
+
 use DDG::Goodie;
 use String::CRC;
 
@@ -18,7 +20,7 @@ attribution web => [ 'https://www.duckduckgo.com', 'DuckDuckGo' ],
             twitter => ['http://twitter.com/duckduckgo', 'duckduckgo'];
 
 
-triggers query_lc => qr/^crc\-?(16|32|64|128)\s*(.*)$/i;
+triggers query_lc => qr/^crc\-?(16|32|64|128|)\s*(.*)$/i;
 
 handle query => sub {
 	my $crclen   = $1 || '';
@@ -34,7 +36,7 @@ handle query => sub {
 		    $str=sprintf("%X",$crc1);
 		} elsif ( $crclen > 32 && $crclen <= 64) {
 		    ($crc1,$crc2) = crc($str,$crclen);
-		    $str=sprintf("%X%X",$crc1,$crc2);
+		    $str=sprintf("%X%X",$crc2,$crc1);
 		} else {
 		    $str="";
 		}
