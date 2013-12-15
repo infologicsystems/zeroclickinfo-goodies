@@ -1,5 +1,6 @@
 package DDG::Goodie::Crc;
 
+# last update 2013/12/15
 # note: testing has not been completed on this package.
 
 use DDG::Goodie;
