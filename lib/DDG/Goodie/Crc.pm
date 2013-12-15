@@ -9,7 +9,7 @@ zci is_cached => 1;
 zci answer_type => "crc";
 
 primary_example_queries 'CRC this';
-secondary_example_queries 'CRC-512 that', 'CRC512sum dim-dims';
+secondary_example_queries 'CRC-32 that';
 description 'CRC cryptography';
 name 'CRC';
 code_url 'https://github.com/duckduckgo/zeroclickinfo-goodies/blob/master/lib/DDG/Goodie/Crc.pm';
@@ -36,7 +36,7 @@ handle query => sub {
 		    $str=sprintf("%X",$crc1);
 		} elsif ( $crclen > 32 && $crclen <= 64) {
 		    ($crc1,$crc2) = crc($str,$crclen);
-		    $str=sprintf("%X%X",$crc2,$crc1);
+		    $str=sprintf("%08X%08X",$crc2,$crc1);
 		} else {
 		    $str="";
 		}
