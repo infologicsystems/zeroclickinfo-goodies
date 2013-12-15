@@ -4,7 +4,8 @@ package DDG::Goodie::Crc;
 # note: testing has not been completed on this package.
 
 use DDG::Goodie;
-use String::CRC;
+#use String::CRC;
+use Digest::CRC qw(crc64 crc32 crc16 crcccitt crc crc8 crcopenpgparmor crc64_hex);
 
 zci is_cached => 1;
 zci answer_type => "crc";
@@ -21,23 +22,28 @@ attribution web => [ 'https://www.duckduckgo.com', 'DuckDuckGo' ],
             twitter => ['http://twitter.com/duckduckgo', 'duckduckgo'];
 
 
-triggers query_lc => qr/^crc\-?(16|32|64|128|)\s*(.*)$/i;
+triggers query_lc => qr/^crc\-?(8|16|32|)\s*(.*)$/i;
 
 handle query => sub {
 	my $crclen   = $1 || '';
 	my $str      = $2 || '';
+
+	my($crc1,$crc2);
 
 	# default crc length is 32
 	if ($crclen eq '') {
 	    $crclen = 32;
 	}
 	if($str) {
-		if ( $crclen <= 32 ) {
-		    ($crc1) = crc($str,$crclen);
+		if ( $crclen == 8 ) {
+		    $crc1 = crc8($str);
 		    $str=sprintf("%X",$crc1);
-		} elsif ( $crclen > 32 && $crclen <= 64) {
-		    ($crc1,$crc2) = crc($str,$crclen);
-		    $str=sprintf("%08X%08X",$crc2,$crc1);
+		} elsif ( $crclen == 16 ) {
+		    $crc1 = crc16($str);
+		    $str=sprintf("%X",$crc1);
+		} elsif ( $crclen == 32 ) {
+		    $crc1 = crc32($str);
+		    $str=sprintf("%X",$crc1);
 		} else {
 		    $str="";
 		}
