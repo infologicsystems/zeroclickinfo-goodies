@@ -12,20 +12,15 @@ ddg_goodie_test(
         [qw(
                 DDG::Goodie::Latex
         )],
-	"latex integral" => test_zci('Command: \int_lowerbound^upperbound
-Example Usage: $\int_a^b f(x)dx$',
-    		html => '<i>Command:</i> \int_lowerbound^upperbound <br> <i>Example Usage:</i> $\int_a^b f(x)dx$',
-		heading => 'Latex command (integral)'),
+	"latex integral" => test_zci('LaTeX command: \int_lowerbound^upperbound
+Example: $\int_a^b f(x)dx$',
+    		html => qr/\\int_lowerbound\^upperbound/,
+		heading => 'Integral (LaTeX)'),
 
-	"Latex integral" => test_zci('Command: \int_lowerbound^upperbound
-Example Usage: $\int_a^b f(x)dx$',
-    		html => '<i>Command:</i> \int_lowerbound^upperbound <br> <i>Example Usage:</i> $\int_a^b f(x)dx$',
-		heading => 'Latex command (integral)'),
-
-	"tex integral" => test_zci('Command: \int_lowerbound^upperbound
-Example Usage: $\int_a^b f(x)dx$',
-    		html => '<i>Command:</i> \int_lowerbound^upperbound <br> <i>Example Usage:</i> $\int_a^b f(x)dx$',
-		heading => 'Latex command (integral)'),
+	"tex integral" => test_zci('LaTeX command: \int_lowerbound^upperbound
+Example: $\int_a^b f(x)dx$',
+		html => qr/\\int_lowerbound\^upperbound/,
+		heading => 'Integral (LaTeX)'),
 );
 
 done_testing;
